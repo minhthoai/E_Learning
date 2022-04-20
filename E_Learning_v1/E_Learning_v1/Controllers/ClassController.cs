@@ -1,10 +1,12 @@
 ﻿using E_Learning_v1.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_Learning_v1.Controllers
 {
+    [Authorize(Roles = "Admin,Teacher,Students")]
     [Route("api/[controller]")]
     [ApiController]
     public class ClassController : ControllerBase
@@ -35,7 +37,7 @@ namespace E_Learning_v1.Controllers
         {
             var dbClass = await _context.Class.FindAsync(@class.MaLop);
             if (dbClass == null)
-                return BadRequest("Lớp không Tồn Tại");
+                return BadRequest("Class does not exist");
             dbClass.MonHoc= @class.MonHoc;
             dbClass.ThoiGian=@class.ThoiGian;
             dbClass.TrangThai=@class.TrangThai;
@@ -48,7 +50,7 @@ namespace E_Learning_v1.Controllers
         {
             var dbClass = await _context.Class.FindAsync(id);
             if (dbClass == null)
-                return BadRequest("Lớp không tồn tại");
+                return BadRequest("Class does not exist");
             _context.Class.Remove(dbClass);
             await _context.SaveChangesAsync();
             return Ok(await _context.Class.ToListAsync());

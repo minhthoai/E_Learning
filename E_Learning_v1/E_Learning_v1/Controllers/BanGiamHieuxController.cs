@@ -8,9 +8,13 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using E_Learning_v1.DataContext;
 using E_Learning_v1.Model;
+using Microsoft.AspNetCore.Authorization;
 
 namespace E_Learning_v1.Controllers
 {
+    [Authorize(Roles = "Admin,Teacher,Students")]
+   //[Route("api/[controller]")]
+   // [ApiController]
     public class BanGiamHieuxController : Controller
     {
         private readonly ApplicationDbContext _context;

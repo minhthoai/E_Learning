@@ -29,7 +29,7 @@ namespace E_Learning_V1.Controllers
             _configuration = configuration;
         }
         [HttpPost]
-        [Route("login")]
+        [Route("login-Student")]
         public async Task<IActionResult> Login([FromBody] LoginStudent model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
@@ -84,7 +84,7 @@ namespace E_Learning_V1.Controllers
             {
                 await _userManager.AddToRoleAsync(user, UserRoles.Admin);
             }
-            return Ok(new ResponseAdmin { Status = "Success", Message = "Admin created successfully!" });
+            return Ok(new ResponseAdmin { Status = "Success", Message = "Student created successfully!" });
         }
 
         [HttpPost]

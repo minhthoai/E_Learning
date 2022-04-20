@@ -1,10 +1,12 @@
 ﻿using E_Learning_v1.Model;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 
 namespace E_Learning_v1.Controllers
 {
+   [Authorize(Roles = "Admin,Teacher,Students")]
     [Route("api/[controller]")]
     [ApiController]
     public class DetailClassController : ControllerBase
@@ -35,7 +37,7 @@ namespace E_Learning_v1.Controllers
         {
             var dbDetail_Class = await _context.Detail_Class.FindAsync(detail_Class.MaLop);
             if (dbDetail_Class == null)
-                return BadRequest("Chi tiết lớp không Tồn Tại");
+                return BadRequest("Detail class does not exist");
             dbDetail_Class.TenGiaoVien = detail_Class.TenGiaoVien;
             dbDetail_Class.BoMon=detail_Class.BoMon;
             dbDetail_Class.MoTa=detail_Class.MoTa;
@@ -52,7 +54,7 @@ namespace E_Learning_v1.Controllers
         {
             var dbDetail_Class = await _context.Detail_Class.FindAsync(id);
             if (dbDetail_Class == null)
-                return BadRequest("Chi tiết lớp không tồn tại");
+                return BadRequest("Detail class does not exist");
             _context.Detail_Class.Remove(dbDetail_Class);
             await _context.SaveChangesAsync();
             return Ok(await _context.Detail_Class.ToListAsync());

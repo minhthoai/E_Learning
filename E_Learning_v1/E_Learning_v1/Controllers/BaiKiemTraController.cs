@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using E_Learning_v1.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace E_Learnin_v1.Controllers
 {
+   [Authorize(Roles = "Admin,Teacher,Students")]
     [Route("api/[controller]")]
     [ApiController]
     public class BaiKiemTraController : ControllerBase
@@ -35,7 +37,7 @@ namespace E_Learnin_v1.Controllers
         {
             var dbBKT = await _context.BaiKiemTra.FindAsync(baiKiemTra.MaBaiKiemTra);
             if (dbBKT == null)
-                return BadRequest("Bài kiểm tra không Tồn Tại");
+                return BadRequest("Test does not exist");
             dbBKT.Lop = baiKiemTra.Lop;
             dbBKT.NoiDungKiemTra= baiKiemTra.NoiDungKiemTra;
             dbBKT.MonHoc= baiKiemTra.MonHoc;
@@ -51,7 +53,7 @@ namespace E_Learnin_v1.Controllers
         {
             var dbBKT = await _context.BaiKiemTra.FindAsync(id);
             if (dbBKT == null)
-                return BadRequest("Bài kiểm tra không tồn tại");
+                return BadRequest("Test does not exist");
             _context.BaiKiemTra.Remove(dbBKT);
             await _context.SaveChangesAsync();
             return Ok(await _context.BaiKiemTra.ToListAsync());

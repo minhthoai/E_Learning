@@ -2,9 +2,11 @@
 using Microsoft.AspNetCore.Mvc;
 using E_Learning_v1.Model;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.AspNetCore.Authorization;
 
 namespace E_Learning_v1.Controllers
 {
+    [Authorize(Roles = "Admin,Teacher,Students")]
     [Route("api/[controller]")]
     [ApiController]
     public class BangDiemController : ControllerBase
@@ -35,7 +37,7 @@ namespace E_Learning_v1.Controllers
         {
             var dbBangDiem = await _context.BangDiem.FindAsync(bangDiem.MaBangDiem);
             if (dbBangDiem == null)
-                return BadRequest("Bảng điểm không Tồn Tại");
+                return BadRequest("Scoreboard does not exist");
             dbBangDiem.TenHocSinh= bangDiem.TenHocSinh;
             dbBangDiem.NgaySinh= bangDiem.NgaySinh;
             dbBangDiem.DiemHocKi= bangDiem.DiemHocKi;
@@ -51,7 +53,7 @@ namespace E_Learning_v1.Controllers
         {
             var dbBangDiem = await _context.BangDiem.FindAsync(id);
             if (dbBangDiem == null)
-                return BadRequest("Bảng điểm không tồn tại");
+                return BadRequest("Scoreboard does not exist");
             _context.BangDiem.Remove(dbBangDiem);
             await _context.SaveChangesAsync();
             return Ok(await _context.BangDiem.ToListAsync());

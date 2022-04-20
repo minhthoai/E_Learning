@@ -29,7 +29,7 @@ namespace E_Learning_v1.Controllers
             _configuration = configuration;
         }
         [HttpPost]
-        [Route("login")]
+        [Route("login-Teacher")]
         public async Task<IActionResult> Login([FromBody] LoginTeacher model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
@@ -59,7 +59,7 @@ namespace E_Learning_v1.Controllers
             return Unauthorized();
         }
         [HttpPost]
-        [Route("register-Student")]
+        [Route("register-Teacher")]
         public async Task<IActionResult> RegisterAdmin([FromBody] RegisterTeacher model)
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
@@ -84,11 +84,11 @@ namespace E_Learning_v1.Controllers
             {
                 await _userManager.AddToRoleAsync(user, UserRoles.Admin);
             }
-            return Ok(new ResponseTeacher { Status = "Success", Message = "Admin created successfully!" });
+            return Ok(new ResponseTeacher { Status = "Success", Message = "Teacher created successfully!" });
         }
 
         [HttpPost]
-        [Route("reset-password-student")]
+        [Route("reset-password-Teacher")]
         public async Task<IActionResult> ResetPasswordAdmin([FromBody]Model.ResetPasswordModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
