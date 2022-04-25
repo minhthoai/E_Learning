@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace E_Learning.Controllers
 {
-    [Authorize(Roles = "Admin,Teacher")]
+    [Authorize(Roles = "Admin,Teacher,BanGiamHieu")]
     [Route("api/[controller]")]
     [ApiController]
     public class ClassController : ControllerBase

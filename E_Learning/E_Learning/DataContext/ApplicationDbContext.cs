@@ -18,6 +18,7 @@ namespace E_Learning.DataContext
         public DbSet<ManageStudent> ManageStudent { get; set; } = null!;
         public DbSet<ManageTeacher> ManageTeacher { get; set; } = null!;
         public DbSet<HoiDap> HoiDap { get; set; } = null!;
+        public DbSet<ManageLearning> ManageLearning { get; set; } = null!;
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

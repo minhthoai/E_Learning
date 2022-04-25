@@ -1,26 +1,24 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.Identity;
+﻿using Microsoft.AspNetCore.Identity;
 using Microsoft.IdentityModel.Tokens;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using E_Learning.ModelManageUser.Student;
 using E_Learning.ModelManageUser;
-using Microsoft.AspNetCore.Authorization;
+using E_Learning.ModelManageUser.BanGiamHieu;
 
 namespace E_Learning.Controllers
 {
-    [Authorize(Roles = "Admin, Teacher, BanGiamHieu")]
     [Route("api/[controller]")]
     [ApiController]
-    public class StudentController : ControllerBase
+    public class BGHController : ControllerBase
     {
         private readonly UserManager<IdentityUser> _userManager;
         private readonly RoleManager<IdentityRole> _roleManager;
         private readonly IConfiguration _configuration;
-        public StudentController(
+        public BGHController(
             UserManager<IdentityUser> userManager,
             RoleManager<IdentityRole> roleManager,
             IConfiguration configuration)
@@ -32,7 +30,7 @@ namespace E_Learning.Controllers
         }
         [HttpPost]
         [Route("login")]
-        public async Task<IActionResult> Login([FromBody] LoginStudent model)
+        public async Task<IActionResult> Login([FromBody] LoginBGH model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
             if (user != null && await _userManager.CheckPasswordAsync(user, model.Password))
@@ -61,12 +59,12 @@ namespace E_Learning.Controllers
             return Unauthorized();
         }
         [HttpPost]
-        [Route("register-Student")]
-        public async Task<IActionResult> RegisterStudent([FromBody] RegisterStudent model)
+        [Route("register-Admin")]
+        public async Task<IActionResult> RegisterBGH([FromBody] RegisterBGH model)
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
             if (userExists != null)
-                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseAdmin { Status = "Error", Message = "User already exists!" });
+                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseBGH { Status = "Error", Message = "User already exists!" });
 
             IdentityUser user = new()
             {
@@ -76,7 +74,7 @@ namespace E_Learning.Controllers
             };
             var result = await _userManager.CreateAsync(user, model.Password);
             if (!result.Succeeded)
-                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseAdmin { Status = "Error", Message = "User creation failed! Please check user details and try again." });
+                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseBGH { Status = "Error", Message = "User creation failed! Please check user details and try again." });
 
             if (!await _roleManager.RoleExistsAsync(UserRoles.Admin))
                 await _roleManager.CreateAsync(new IdentityRole(UserRoles.Admin));
@@ -86,7 +84,7 @@ namespace E_Learning.Controllers
             {
                 await _userManager.AddToRoleAsync(user, UserRoles.Admin);
             }
-            return Ok(new ResponseAdmin { Status = "Success", Message = "Student created successfully!" });
+            return Ok(new ResponseBGH { Status = "Success", Message = "BGH created successfully!" });
         }
 
         [HttpGet]
@@ -99,15 +97,15 @@ namespace E_Learning.Controllers
         }
 
         [HttpPost]
-        [Route("reset-password-Student")]
-        public async Task<IActionResult> ResetPasswordStudent([FromBody] ResetPasswordStudentModel model)
+        [Route("reset-password-admin")]
+        public async Task<IActionResult> ResetPasswordBGH([FromBody] ResetPasswordBGHModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
             if (user == null)
-                return StatusCode(StatusCodes.Status404NotFound, new ResponseAdmin { Status = "Error", Message = "User does not exists" });
+                return StatusCode(StatusCodes.Status404NotFound, new ResponseBGH { Status = "Error", Message = "User does not exists" });
 
             if (string.Compare(model.NewPassword, model.ConfirmNewPassword) != 0)
-                return StatusCode(StatusCodes.Status400BadRequest, new ResponseAdmin { Status = "Error", Message = "The new passsword and confirm password does not match" });
+                return StatusCode(StatusCodes.Status400BadRequest, new ResponseBGH { Status = "Error", Message = "The new passsword and confirm password does not match" });
             var token = await _userManager.GeneratePasswordResetTokenAsync(user);
             var result = await _userManager.ResetPasswordAsync(user, token, model.NewPassword);
             if (!result.Succeeded)
@@ -117,10 +115,10 @@ namespace E_Learning.Controllers
                 {
                     errors.Add(error.Description);
                 }
-                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseAdmin { Status = "Error", Message = string.Join(",", errors) });
+                return StatusCode(StatusCodes.Status500InternalServerError, new ResponseBGH { Status = "Error", Message = string.Join(",", errors) });
 
             }
-            return Ok(new ResponseAdmin { Status = "Success", Message = "Password successfully reseted " });
+            return Ok(new ResponseBGH { Status = "Success", Message = "Password successfully reseted " });
         }
 
 

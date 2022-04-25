@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace E_Learning.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initialCreate : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -143,6 +143,19 @@ namespace E_Learning.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_HoiDap", x => x.MaHoiDap);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "ManageLearning",
+                columns: table => new
+                {
+                    Ma_KhoaHoc = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    Ten_KhoaHoa = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MoTa = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_ManageLearning", x => x.Ma_KhoaHoc);
                 });
 
             migrationBuilder.CreateTable(
@@ -357,6 +370,9 @@ namespace E_Learning.Migrations
 
             migrationBuilder.DropTable(
                 name: "HoiDap");
+
+            migrationBuilder.DropTable(
+                name: "ManageLearning");
 
             migrationBuilder.DropTable(
                 name: "ManageStudent");

@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace E_Learning.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20220424153422_Initial")]
-    partial class Initial
+    [Migration("20220425013533_initialCreate")]
+    partial class initialCreate
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -194,6 +194,23 @@ namespace E_Learning.Migrations
                     b.HasKey("MaHoiDap");
 
                     b.ToTable("HoiDap");
+                });
+
+            modelBuilder.Entity("E_Learning.Model.ManageLearning", b =>
+                {
+                    b.Property<Guid>("Ma_KhoaHoc")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("MoTa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ten_KhoaHoa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Ma_KhoaHoc");
+
+                    b.ToTable("ManageLearning");
                 });
 
             modelBuilder.Entity("E_Learning.Model.ManageStudent", b =>

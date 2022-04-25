@@ -194,6 +194,23 @@ namespace E_Learning.Migrations
                     b.ToTable("HoiDap");
                 });
 
+            modelBuilder.Entity("E_Learning.Model.ManageLearning", b =>
+                {
+                    b.Property<Guid>("Ma_KhoaHoc")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("MoTa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Ten_KhoaHoa")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.HasKey("Ma_KhoaHoc");
+
+                    b.ToTable("ManageLearning");
+                });
+
             modelBuilder.Entity("E_Learning.Model.ManageStudent", b =>
                 {
                     b.Property<int>("MaStudent")

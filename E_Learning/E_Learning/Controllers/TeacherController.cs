@@ -8,9 +8,11 @@ using System.Text;
 using Microsoft.EntityFrameworkCore;
 using E_Learning .ModelManageUser.Teacher;
 using E_Learning.ModelManageUser;
+using Microsoft.AspNetCore.Authorization;
 
 namespace E_Learning.Controllers
 {
+    [Authorize(Roles = "Admin, BanGiamHieu")]
     [Route("api/[controller]")]
     [ApiController]
     public class TeacherController : ControllerBase
@@ -119,6 +121,18 @@ namespace E_Learning.Controllers
             return Ok(users);
 
         }
+        [HttpDelete]
+        public async Task<IActionResult> Delete(string id)
+        {
+            var user = await _userManager.FindByIdAsync(id);
+            if (user != null)
+            {
+                IdentityResult result = await _userManager.DeleteAsync(user);
+                return Ok("Success");
+            }
+            return Ok("No ID");
+        }
+
         private JwtSecurityToken GetToken(List<Claim> authClaims)
         {
             var authSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_configuration["JWT:Secret"]));
