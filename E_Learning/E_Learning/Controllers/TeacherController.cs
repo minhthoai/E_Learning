@@ -12,7 +12,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace E_Learning.Controllers
 {
-    [Authorize(Roles = "Admin, BanGiamHieu")]
+    
     [Route("api/[controller]")]
     [ApiController]
     public class TeacherController : ControllerBase
