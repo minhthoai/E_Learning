@@ -59,7 +59,7 @@ namespace E_Learning.Controllers
             return Unauthorized();
         }
         [HttpPost]
-        [Route("register-Admin")]
+        [Route("register-BGH")]
         public async Task<IActionResult> RegisterBGH([FromBody] RegisterBGH model)
         {
             var userExists = await _userManager.FindByNameAsync(model.Username);
@@ -97,7 +97,7 @@ namespace E_Learning.Controllers
         }
 
         [HttpPost]
-        [Route("reset-password-admin")]
+        [Route("reset-password-BGH")]
         public async Task<IActionResult> ResetPasswordBGH([FromBody] ResetPasswordBGHModel model)
         {
             var user = await _userManager.FindByNameAsync(model.Username);
