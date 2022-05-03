@@ -17,7 +17,7 @@ namespace E_Learning.Controllers
         {
             _context = context;
         }
-
+        //[Authorize (Roles ="Student")]
         [HttpGet]
         public async Task<ActionResult<List<BangDiem>>> GetBangDiem()
         {
@@ -40,8 +40,12 @@ namespace E_Learning.Controllers
                 return BadRequest("Scoreboard does not exist");
             dbBangDiem.TenHocSinh= bangDiem.TenHocSinh;
             dbBangDiem.NgaySinh= bangDiem.NgaySinh;
-            dbBangDiem.DiemHocKi= bangDiem.DiemHocKi;
+            dbBangDiem.ChuyenCan= bangDiem.ChuyenCan;
+            dbBangDiem.DiemMieng= bangDiem.DiemMieng;
+            dbBangDiem.HeSo1= bangDiem.HeSo1;
+            dbBangDiem.HeSo2= bangDiem.HeSo2;
             dbBangDiem.DiemTrungBinh= bangDiem.DiemTrungBinh;
+            dbBangDiem.DiemTrungBinhCaNam= bangDiem.DiemTrungBinhCaNam;
             dbBangDiem.TrangThai= bangDiem.TrangThai;
             dbBangDiem.NgayCapNhat= bangDiem.NgayCapNhat;
             await _context.SaveChangesAsync();

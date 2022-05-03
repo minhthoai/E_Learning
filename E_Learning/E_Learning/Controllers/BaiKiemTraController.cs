@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace E_Learning.Controllers
 {
-   [Authorize(Roles = "Admin,Teacher,Students")]
+   [Authorize(Roles = "Admin,Teacher")]
     [Route("api/[controller]")]
     [ApiController]
     public class BaiKiemTraController : ControllerBase
@@ -17,13 +17,13 @@ namespace E_Learning.Controllers
         {
             _context = context;
         }
-
+       // [Authorize(Roles = "Admin,Teacher,Student")]
         [HttpGet]
         public async Task<ActionResult<List<BaiKiemTra>>> GetBaiKiemTra()
         {
             return Ok(await _context.BaiKiemTra.ToListAsync());
         }
-
+      //  [Authorize(Roles = "Admin,Teacher")]
         [HttpPost]
         public async Task<ActionResult<List<BaiKiemTra>>> PostBaiKiemTra(BaiKiemTra baiKiemTra)
         {

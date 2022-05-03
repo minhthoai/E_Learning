@@ -33,7 +33,7 @@ namespace E_Learning.Controllers
 
         // GET: api/ManageLearnings/5
         [HttpGet("{id}")]
-        public async Task<ActionResult<ManageLearning>> GetManageLearning(Guid id)
+        public async Task<ActionResult<ManageLearning>> GetManageLearning(int id)
         {
             var manageLearning = await _context.ManageLearning.FindAsync(id);
 
@@ -48,7 +48,7 @@ namespace E_Learning.Controllers
         // PUT: api/ManageLearnings/5
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutManageLearning(Guid id, ManageLearning manageLearning)
+        public async Task<IActionResult> PutManageLearning(int id, ManageLearning manageLearning)
         {
             if (id != manageLearning.Ma_KhoaHoc)
             {
@@ -103,7 +103,7 @@ namespace E_Learning.Controllers
             return NoContent();
         }
 
-        private bool ManageLearningExists(Guid id)
+        private bool ManageLearningExists(int id)
         {
             return _context.ManageLearning.Any(e => e.Ma_KhoaHoc == id);
         }

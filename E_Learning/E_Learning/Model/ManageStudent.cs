@@ -8,6 +8,6 @@ namespace E_Learning.Model
         public string TenStudent { get; set; } = string.Empty;
         public DateTime NgaySinh { get; set; }
         public string GioiTinh { get; set; } = string.Empty;
-        public string DiaChia { get; set; } = string.Empty;
+        public string DiaChi { get; set; } = string.Empty;
     }
 }
